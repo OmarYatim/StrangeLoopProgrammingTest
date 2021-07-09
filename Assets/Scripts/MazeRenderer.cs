@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class MazeRenderer : MonoBehaviour
@@ -24,9 +25,11 @@ public class MazeRenderer : MonoBehaviour
     private void DrawMaze(WallState[,] maze)
     {
         GameObject MazePlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        NavMeshSurface Surface = MazePlane.AddComponent(typeof(NavMeshSurface)) as NavMeshSurface;
         MazePlane.transform.localPosition = MazeCenter;
         MazePlane.transform.SetParent(MazeParent);
         MazePlane.transform.localScale = new Vector3(MazeSize, 1, MazeSize);
+
 
         for (int i = 0; i < MazeSize; i++)
         {
@@ -72,6 +75,8 @@ public class MazeRenderer : MonoBehaviour
                 }
             }
         }
+
+        Surface.BuildNavMesh();
     }
 
 }
